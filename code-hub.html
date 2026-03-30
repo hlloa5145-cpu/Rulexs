@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolex | كود هاب</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; color: #1f2937; margin: 0; }
+        
+        .rolex-card {
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 10px 10px 20px #e5e7eb, -10px -10px 20px #ffffff;
+            border-radius: 35px;
+        }
+
+        /* حلقة التقدم 3D */
+        .progress-ring {
+            position: relative;
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#3b82f6 0%, #e5e7eb 0%);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 5px 5px 10px #d1d1d1, inset -5px -5px 10px #ffffff;
+            transition: 0.5s;
+        }
+        .progress-ring::before {
+            content: "";
+            position: absolute;
+            width: 120px; height: 120px;
+            background: white; border-radius: 50%;
+            box-shadow: 5px 5px 10px #e5e7eb;
+        }
+
+        .input-3d {
+            box-shadow: inset 6px 6px 12px #dbdbdb, inset -6px -6px 12px #ffffff;
+            border: none; outline: none;
+            transition: 0.3s;
+        }
+        .input-3d:focus { box-shadow: inset 2px 2px 5px #3b82f644; border: 1px solid #3b82f622; }
+
+        .btn-activate {
+            background: linear-gradient(145deg, #1e40af, #3b82f6);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            transition: 0.3s;
+        }
+        .btn-activate:active { transform: scale(0.95); }
+    </style>
+</head>
+<body class="pb-24">
+
+    <div class="p-6 flex items-center gap-4">
+        <button onclick="window.location.href='index.html'" class="w-10 h-10 rolex-card flex items-center justify-center text-blue-600 font-bold">
+            →
+        </button>
+        <h1 class="text-xl font-black text-gray-800 tracking-tighter uppercase">CODE HUB 🔑</h1>
+    </div>
+
+    <div class="px-6 flex justify-center mb-10">
+        <div class="rolex-card p-8 w-full flex flex-col items-center">
+            <div id="ring" class="progress-ring mb-4">
+                <span id="taskText" class="relative text-3xl font-black text-blue-600">0/3</span>
+            </div>
+            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">معدل التفعيل اليومي</p>
+        </div>
+    </div>
+
+    <div class="px-6 space-y-6">
+        <div class="text-center">
+            <h3 class="font-bold text-gray-700">تنشيط الأرباح</h3>
+            <p class="text-xs text-gray-400">أدخل الكود الذي حصلت عليه من القناة الرسمية</p>
+        </div>
+
+        <input type="text" id="couponInput" placeholder="إلصق الكود هنا..." 
+               class="w-full p-5 rounded-3xl input-3d bg-gray-50 text-center text-xl tracking-widest text-blue-700 font-black uppercase">
+        
+        <button onclick="activateProcess()" class="w-full p-5 btn-activate text-white font-bold rounded-3xl text-lg flex items-center justify-center gap-2">
+            <span>تفعيل الآن</span>
+            <span class="text-xl">⚡</span>
+        </button>
+    </div>
+
+    <div class="px-6 mt-12">
+        <h4 class="text-[10px] text-gray-400 font-bold uppercase mb-4 tracking-widest">تاريخ تفعيل اليوم</h4>
+        <div id="history" class="space-y-3">
+            <p id="emptyMsg" class="text-xs text-gray-300 text-center">لا توجد عمليات تفعيل بعد</p>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md p-4 flex justify-around items-center border-t border-gray-100 rounded-t-[40px] shadow-2xl">
+        <a href="index.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">🏰</span>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </a>
+        <a href="code-hub.html" class="flex flex-col items-center text-blue-600 relative">
+            <span class="text-xl">🔑</span>
+            <span class="text-[10px] font-bold">كود هاب</span>
+            <div class="absolute -bottom-2 w-1 h-1 bg-blue-600 rounded-full"></div>
+        </a>
+        <a href="team.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">📈</span>
+            <span class="text-[10px] font-bold">الفريق</span>
+        </a>
+        <a href="profile.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">⚙️</span>
+            <span class="text-[10px] font-bold">إعدادات</span>
+        </a>
+    </div>
+
+    <script>
+        let count = 0;
+
+        function activateProcess() {
+            const input = document.getElementById('couponInput');
+            const ring = document.getElementById('ring');
+            const taskText = document.getElementById('taskText');
+            
+            if(input.value.trim() === "") {
+                alert("يرجى إدخال كود صحيح!");
+                return;
+            }
+
+            if(count < 3) {
+                count++;
+                // تحديث العداد والحلقة
+                const percent = (count / 3) * 100;
+                ring.style.background = `conic-gradient(#3b82f6 ${percent}%, #e5e7eb ${percent}%)`;
+                taskText.innerText = count + "/3";
+                
+                // إضافة للسجل
+                const history = document.getElementById('history');
+                const emptyMsg = document.getElementById('emptyMsg');
+                if(emptyMsg) emptyMsg.remove();
+
+                const item = document.createElement('div');
+                item.className = "rolex-card p-4 flex justify-between items-center animate-pulse";
+                item.innerHTML = `
+                    <span class="text-xs font-bold text-gray-600 uppercase tracking-tighter">Code: ${input.value}</span>
+                    <span class="text-[10px] bg-green-100 text-green-600 px-2 py-1 rounded-full font-bold">تم التفعيل +3.3%</span>
+                `;
+                history.prepend(item);
+                
+                // تصفير الإدخال
+                alert("تم تفعيل الكود بنجاح! تم إضافة الأرباح التراكمية لمحفظتك.");
+                input.value = "";
+            } else {
+                alert("لقد أكملت مهامك لليوم بنجاح، ننتظرك غداً!");
+            }
+        }
+    </script>
+</body>
+</html>
