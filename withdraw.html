@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolex | سحب الأرباح</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; color: #1f2937; margin: 0; }
+        
+        .rolex-card {
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 10px 10px 20px #e5e7eb, -10px -10px 20px #ffffff;
+            border-radius: 30px;
+        }
+
+        .input-3d {
+            box-shadow: inset 5px 5px 10px #e2e8f0, inset -5px -5px 10px #ffffff;
+            border: none; outline: none;
+            background-color: #f8fafc;
+        }
+
+        .btn-withdraw {
+            background: linear-gradient(145deg, #1e293b, #334155);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        .btn-withdraw:active { transform: scale(0.95); }
+
+        .balance-badge {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="pb-10">
+
+    <div class="p-6 flex items-center gap-4">
+        <button onclick="window.location.href='index.html'" class="w-10 h-10 rolex-card flex items-center justify-center text-blue-600 font-bold">
+            →
+        </button>
+        <h1 class="text-xl font-black text-gray-800 tracking-tighter uppercase">WITHDRAW 💸</h1>
+    </div>
+
+    <div class="px-6 mb-8 text-center">
+        <div class="rolex-card p-6 border-b-4 border-blue-500">
+            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">الرصيد المتاح للسحب</p>
+            <h2 class="text-4xl font-black text-blue-600">0.00 <span class="text-sm font-normal text-gray-400">USDT</span></h2>
+        </div>
+    </div>
+
+    <div class="px-6 space-y-6">
+        <div class="rolex-card p-6 space-y-5">
+            
+            <div>
+                <label class="text-[10px] text-gray-400 font-bold block mb-2 uppercase">شبكة السحب</1label>
+                <select id="networkSelect" class="w-full p-4 rounded-2xl input-3d text-sm font-bold text-gray-700 outline-none">
+                    <option value="TRC20">TRC20 (الشبكة المفضلة)</option>
+                    <option value="BEP20">BEP20 (Binance Smart Chain)</option>
+                    <option value="ERC20">ERC20 (Ethereum)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-[10px] text-gray-400 font-bold block mb-2 uppercase">عنوان محفظة الاستلام</label>
+                <input type="text" id="userAddress" placeholder="لصق العنوان هنا..." 
+                       class="w-full p-4 rounded-2xl input-3d text-xs font-mono text-blue-600">
+            </div>
+
+            <div>
+                <label class="text-[10px] text-gray-400 font-bold block mb-2 uppercase">المبلغ المطلوب (Min 10 USDT)</label>
+                <input type="number" id="withdrawAmount" placeholder="0.00" 
+                       class="w-full p-4 rounded-2xl input-3d text-xl font-black text-gray-800">
+            </div>
+
+            <div class="balance-badge p-3 rounded-xl flex justify-between items-center text-[10px]">
+                <span class="text-gray-400 font-bold uppercase">رسوم الشبكة:</span>
+                <span class="text-blue-600 font-black">1.00 USDT</span>
+            </div>
+
+            <button onclick="requestWithdraw()" class="btn-withdraw w-full text-white p-5 rounded-2xl font-bold text-lg shadow-xl active:scale-95 transition-all">
+                تأكيد السحب الفوري
+            </button>
+        </div>
+    </div>
+
+    <div class="px-8 mt-6">
+        <div class="flex items-start gap-3 opacity-50 text-[10px] text-gray-500">
+            <span>🛡️</span>
+            <p>تتم معالجة طلبات السحب يدوياً من قبل إدارة Rolex لضمان أمان أموالك. قد تستغرق العملية من 5 دقائق إلى ساعتين.</p>
+        </div>
+    </div>
+
+    <script>
+        function requestWithdraw() {
+            const address = document.getElementById('userAddress').value;
+            const amount = document.getElementById('withdrawAmount').value;
+
+            if(address.length < 10) {
+                alert("يرجى إدخال عنوان محفظة صحيح!");
+                return;
+            }
+            if(amount < 10) {
+                alert("الحد الأدنى للسحب هو 10 USDT");
+                return;
+            }
+
+            // هنا يتم إرسال الطلب لـ Supabase
+            alert("تم استلام طلب السحب بنجاح! سيتم التحقق من العملية وتحويل الأموال إلى محفظتك قريباً.");
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
