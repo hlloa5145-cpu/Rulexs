@@ -1,17 +1,125 @@
-<script>
-    function handleAuth() {
-        const email = document.getElementById('email').value;
-        const pass = document.getElementById('pass').value;
-
-        // إيميل الإدارة الخاص بك
-        const adminEmail = "hlloa5145@gmail.com";
-        const adminPass = "ROLEX2026"; // يمكنك تغيير كلمة السر هنا
-
-        if (email === adminEmail && pass === adminPass) {
-            sessionStorage.setItem('isAdmin', 'true');
-            window.location.href = 'admin-control.html';
-        } else {
-            window.location.href = 'index.html';
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolex | تسجيل الدخول الملكي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background: #ffffff; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: screen;
+            margin: 0;
         }
-    }
-</script>
+        
+        .rolex-card {
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 20px 20px 60px #d1d1d1, -20px -20px 60px #ffffff;
+            border-radius: 40px;
+        }
+
+        .input-3d {
+            box-shadow: inset 6px 6px 12px #dbdbdb, inset -6px -6px 12px #ffffff;
+            border: none; outline: none;
+            transition: 0.3s;
+        }
+        .input-3d:focus {
+            box-shadow: inset 2px 2px 5px rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-login {
+            background: linear-gradient(145deg, #1e40af, #3b82f6);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body class="p-6 bg-gray-50">
+
+    <div class="w-full max-w-sm">
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-black text-blue-600 tracking-tighter italic">ROLEX</h1>
+            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-2">Digital Asset Management</p>
+        </div>
+
+        <div class="rolex-card p-10 space-y-8">
+            <div class="text-center">
+                <h2 class="text-xl font-bold text-gray-800">مرحباً بك مجدداً</h2>
+                <p class="text-xs text-gray-400 mt-1">سجل دخولك لإدارة استثماراتك</p>
+            </div>
+
+            <div class="space-y-5">
+                <div>
+                    <label class="text-[10px] text-gray-400 font-bold uppercase mr-4 mb-2 block tracking-widest">البريد الإلكتروني</label>
+                    <input type="email" id="email" placeholder="example@mail.com" 
+                           class="w-full p-5 rounded-3xl input-3d bg-gray-50 text-sm font-bold text-blue-900">
+                </div>
+
+                <div>
+                    <label class="text-[10px] text-gray-400 font-bold uppercase mr-4 mb-2 block tracking-widest">كلمة المرور</label>
+                    <input type="password" id="password" placeholder="••••••••" 
+                           class="w-full p-5 rounded-3xl input-3d bg-gray-50 text-sm font-bold text-blue-900">
+                </div>
+            </div>
+
+            <button onclick="handleAuth()" class="btn-login w-full p-5 text-white font-bold rounded-3xl text-lg shadow-xl active:scale-95 transition-all">
+                دخول المنصة 🚀
+            </button>
+
+            <div class="text-center pt-4">
+                <p class="text-[10px] text-gray-400 font-bold uppercase">
+                    ليس لديك حساب؟ <a href="register.html" class="text-blue-600 underline">إنشاء حساب</a>
+                </p>
+            </div>
+        </div>
+
+        <p class="text-center text-[9px] text-gray-300 mt-10 font-bold uppercase tracking-widest">
+            © 2026 Rolex Premium Investment System
+        </p>
+    </div>
+
+    <script>
+        function handleAuth() {
+            const emailInput = document.getElementById('email').value.trim();
+            const passwordInput = document.getElementById('password').value.trim();
+
+            if (!emailInput || !passwordInput) {
+                alert("يرجى ملء جميع الحقول!");
+                return;
+            }
+
+            // --- نظام التحقق الذكي ---
+            
+            // 1. حساب الإدارة الخاص بك
+            const ADMIN_EMAIL = "hlloa5145@gmail.com";
+            
+            if (emailInput.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+                // حفظ جلسة الأدمن في المتصفح
+                sessionStorage.setItem('isAdmin', 'true');
+                alert("مرحباً بك أيها المدير.. جاري الانتقال للوحة التحكم.");
+                window.location.href = 'admin-control.html';
+            } 
+            else {
+                // 2. حساب مستخدم عادي (يمكن ربطه بـ Supabase لاحقاً للتحقق من كلمة السر)
+                sessionStorage.setItem('isAdmin', 'false');
+                sessionStorage.setItem('userEmail', emailInput);
+                
+                // تهيئة رصيد افتراضي إذا كان المستخدم جديداً (لأغراض العرض)
+                if (!localStorage.getItem('rolex_balance')) {
+                    localStorage.setItem('rolex_balance', '0.00');
+                }
+
+                alert("تم تسجيل الدخول بنجاح! مرحباً بك في روليكس.");
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+</body>
+</html>
