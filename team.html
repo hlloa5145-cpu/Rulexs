@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolex | فريقي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; color: #1f2937; margin: 0; }
+        
+        .rolex-card {
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 10px 10px 20px #e5e7eb, -10px -10px 20px #ffffff;
+            border-radius: 30px;
+        }
+
+        .referral-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 2px dashed rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+        }
+
+        .stat-circle {
+            width: 60px; height: 60px;
+            border-radius: 20px;
+            background: white;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+            font-size: 1.5rem;
+        }
+
+        .btn-share {
+            background: linear-gradient(145deg, #2563eb, #1d4ed8);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+    </style>
+</head>
+<body class="pb-24">
+
+    <div class="p-6 flex items-center gap-4">
+        <button onclick="window.location.href='index.html'" class="w-10 h-10 rolex-card flex items-center justify-center text-blue-600 font-bold">
+            →
+        </button>
+        <h1 class="text-xl font-black text-gray-800 tracking-tighter uppercase">MY TEAM 👥</h1>
+    </div>
+
+    <div class="px-6 mb-8">
+        <div class="rolex-card p-6 border-t-4 border-blue-500">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">إجمالي أرباح الشبكة</p>
+                    <h2 class="text-3xl font-black text-blue-600">0.00 <span class="text-sm font-normal text-gray-400">USDT</span></h2>
+                </div>
+                <div class="stat-circle text-blue-500">💰</div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 border-t border-gray-50 pt-4">
+                <div class="text-center">
+                    <p class="text-[10px] text-gray-400 font-bold uppercase">أعضاء الفريق</p>
+                    <p class="text-lg font-black text-gray-700">0</p>
+                </div>
+                <div class="text-center border-r border-gray-50">
+                    <p class="text-[10px] text-gray-400 font-bold uppercase">نسبة العمولات</p>
+                    <p class="text-lg font-black text-green-500">10%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-6">
+        <div class="rolex-card p-8 text-center">
+            <h3 class="font-bold text-gray-700 mb-2">قم بدعوة أصدقائك</h3>
+            <p class="text-xs text-gray-400 mb-6">شارك رابطك الخاص واحصل على عمولة فورية بنسبة 10% على كل إيداع يقوم به فريقك.</p>
+            
+            <div class="referral-box p-4 mb-6 relative">
+                <p id="refLink" class="text-xs font-mono text-blue-600 break-all">https://rolex-platform.com/reg?ref=USER123</p>
+            </div>
+
+            <button onclick="copyRef()" class="btn-share w-full text-white p-4 rounded-2xl font-bold active:scale-95 transition-all flex items-center justify-center gap-2">
+                <span>نسخ رابط الدعوة</span>
+                <span>🔗</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="px-6 mt-10">
+        <h4 class="text-[10px] text-gray-400 font-bold uppercase mb-4 tracking-widest">آخر المنضمين للفريق</h4>
+        <div class="space-y-3">
+            <div class="rolex-card p-4 flex justify-between items-center opacity-60">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs">👤</div>
+                    <span class="text-xs font-bold">لم ينضم أحد بعد</span>
+                </div>
+                <span class="text-[10px] text-gray-300 font-bold">--/--/--</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md p-4 flex justify-around items-center border-t border-gray-100 rounded-t-[40px] shadow-2xl">
+        <a href="index.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">🏰</span>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </a>
+        <a href="code-hub.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">🔑</span>
+            <span class="text-[10px] font-bold">كود هاب</span>
+        </a>
+        <a href="team.html" class="flex flex-col items-center text-blue-600 relative">
+            <span class="text-xl">📈</span>
+            <span class="text-[10px] font-bold">الفريق</span>
+            <div class="absolute -bottom-2 w-1 h-1 bg-blue-600 rounded-full"></div>
+        </a>
+        <a href="profile.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">⚙️</span>
+            <span class="text-[10px] font-bold">إعدادات</span>
+        </a>
+    </div>
+
+    <script>
+        function copyRef() {
+            const link = document.getElementById('refLink').innerText;
+            navigator.clipboard.writeText(link);
+            alert("تم نسخ رابط الدعوة! انشره الآن لبناء فريقك وزيادة أرباحك.");
+        }
+    </script>
+</body>
+</html>
