@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolex | منصة الاستثمار التراكمي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; color: #1f2937; margin: 0; overflow-x: hidden; }
+        
+        /* تصميم الـ 3D والزجاج */
+        .rolex-card {
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 15px 15px 30px #d1d1d1, -15px -15px 30px #ffffff;
+            border-radius: 35px;
+            position: relative;
+        }
+        .blue-glow {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.15);
+        }
+        .price-ticker {
+            background: rgba(59, 130, 246, 0.03);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.05);
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 8px 0;
+        }
+        .ticker-move {
+            display: inline-block;
+            animation: ticker 15s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .nav-icon { font-size: 1.4rem; margin-bottom: 2px; }
+        .active-tab { color: #2563eb; position: relative; }
+        .active-tab::after {
+            content: ''; position: absolute; bottom: -5px; width: 5px; height: 5px;
+            background: #2563eb; border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="pb-24">
+
+    <div class="price-ticker">
+        <div class="ticker-move text-xs font-bold text-blue-500">
+            <span class="mx-4">BTC/USDT: <span id="btc">...</span></span>
+            <span class="mx-4">TRX/USDT: <span id="trx">...</span></span>
+            <span class="mx-4">ETH/USDT: <span id="eth">...</span></span>
+            <span class="mx-4">BNB/USDT: <span id="bnb">...</span></span>
+        </div>
+    </div>
+
+    <div class="p-6 flex justify-between items-center">
+        <div>
+            <p class="text-gray-400 text-xs font-bold uppercase tracking-widest">Premium Platform</p>
+            <h1 class="text-3xl font-black text-gray-800 tracking-tighter">ROLEX</h1>
+        </div>
+        <div class="w-12 h-12 rolex-card flex items-center justify-center text-xl blue-glow">
+            👑
+        </div>
+    </div>
+
+    <div class="px-6 mt-2">
+        <div class="rolex-card p-10 text-center border-t-4 border-blue-400">
+            <p class="text-gray-400 text-sm mb-1">الرصيد التراكمي المتاح</p>
+            <h2 class="text-5xl font-black text-blue-600 tracking-tight mb-4">
+                <span id="balance">0.00</span> <span class="text-lg text-gray-400 font-normal">USDT</span>
+            </h2>
+            <div class="inline-flex items-center px-4 py-2 bg-blue-50 rounded-full text-blue-600 text-xs font-bold">
+                <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse ml-2"></span>
+                نمو يومي مستقر +3.3%
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-5 px-6 mt-8">
+        <button onclick="window.location.href='deposit.html'" class="bg-blue-600 text-white p-5 rounded-3xl font-bold shadow-lg shadow-blue-200 active:scale-95 transition-all">
+            إيداع أموال
+        </button>
+        <button onclick="window.location.href='withdraw.html'" class="rolex-card text-blue-600 p-5 rounded-3xl font-bold active:scale-95 transition-all">
+            سحب أرباح
+        </button>
+    </div>
+
+    <div class="px-6 mt-10">
+        <div class="rolex-card p-6 flex justify-around">
+            <div class="text-center">
+                <p class="text-[10px] text-gray-400 uppercase font-bold">عمولة الإحالة</p>
+                <p class="text-xl font-black text-blue-600">10%</p>
+            </div>
+            <div class="w-[1px] bg-gray-100"></div>
+            <div class="text-center">
+                <p class="text-[10px] text-gray-400 uppercase font-bold">أرباح الفريق</p>
+                <p class="text-xl font-black text-blue-600">0.00</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md p-4 flex justify-around items-center border-t border-gray-100 rounded-t-[40px] shadow-2xl">
+        <a href="index.html" class="flex flex-col items-center active-tab">
+            <span class="nav-icon">🏰</span>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </a>
+        <a href="code-hub.html" class="flex flex-col items-center text-gray-300">
+            <span class="nav-icon">🔑</span>
+            <span class="text-[10px] font-bold">كود هاب</span>
+        </a>
+        <a href="team.html" class="flex flex-col items-center text-gray-300">
+            <span class="nav-icon">📈</span>
+            <span class="text-[10px] font-bold">الفريق</span>
+        </a>
+        <a href="profile.html" class="flex flex-col items-center text-gray-300">
+            <span class="nav-icon">⚙️</span>
+            <span class="text-[10px] font-bold">إعدادات</span>
+        </a>
+    </div>
+
+    <script>
+        // ربط الأسعار الحية
+        async function getCryptoPrices() {
+            try {
+                const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbols=["BTCUSDT","TRXUSDT","ETHUSDT","BNBUSDT"]');
+                const data = await response.json();
+                document.getElementById('btc').innerText = "$" + Math.round(data[0].price);
+                document.getElementById('trx').innerText = "$" + parseFloat(data[1].price).toFixed(4);
+                document.getElementById('eth').innerText = "$" + Math.round(data[2].price);
+                document.getElementById('bnb').innerText = "$" + Math.round(data[3].price);
+            } catch (err) { console.log("Market Offline"); }
+        }
+        setInterval(getCryptoPrices, 5000);
+        getCryptoPrices();
+
+        // ملاحظة للمدير: الربط مع Supabase يتم عبر ملف script.js الخارجي لضمان الأمان.
+    </script>
+</body>
+</html>
