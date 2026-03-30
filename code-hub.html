@@ -1,29 +1,186 @@
-// استبدل سكريبت التحقق في صفحة code-hub بهذا الكود الذكي:
-const SUPABASE_URL = "https://rsmrgiyecaoicrqxgize.supabase.co";
-const SUPABASE_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // مفتاحك الخاص
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolex | Code Hub 🔑</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; color: #1f2937; margin: 0; }
+        
+        .rolex-card {
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 10px 10px 20px #e5e7eb, -10px -10px 20px #ffffff;
+            border-radius: 35px;
+        }
 
-async function activateProcess() {
-    const userInput = document.getElementById('couponInput').value.trim();
+        .input-3d {
+            box-shadow: inset 6px 6px 12px #dbdbdb, inset -6px -6px 12px #ffffff;
+            border: none; outline: none;
+            transition: 0.3s;
+        }
 
-    // 1. سؤال قاعدة البيانات: هل الكود موجود وغير مستخدم؟
-    const { data, error } = await _supabase
-        .from('active_codes')
-        .select('*')
-        .eq('code_value', userInput)
-        .eq('is_used', false);
+        .btn-activate {
+            background: linear-gradient(145deg, #1e40af, #3b82f6);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .progress-ring {
+            position: relative;
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(#3b82f6 0%, #f3f4f6 0%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .progress-ring::after {
+            content: "";
+            position: absolute;
+            width: 100px; height: 100px;
+            background: white; border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="pb-24">
 
-    if (data && data.length > 0) {
-        // 2. إذا وجده، نقوم بتعطيله فوراً لكي لا يستخدمه شخص آخر
-        await _supabase
-            .from('active_codes')
-            .update({ is_used: true })
-            .eq('code_value', userInput);
+    <div class="p-6 flex items-center gap-4">
+        <button onclick="window.location.href='index.html'" class="w-10 h-10 rolex-card flex items-center justify-center text-blue-600 font-bold">
+            →
+        </button>
+        <h1 class="text-xl font-black text-gray-800 uppercase tracking-tighter">CODE HUB 🔑</h1>
+    </div>
 
-        // 3. زيادة الرصيد (تخيلية هنا وتضاف لقاعدة بيانات المستخدم لاحقاً)
-        alert("✅ كود ملكي صحيح! تم تفعيل أرباح Rolex بنجاح.");
-        window.location.href = 'index.html';
-    } else {
-        alert("❌ عذراً، هذا الكود غير صالح أو تم استخدامه من قبل.");
-    }
-}
+    <div class="px-6 flex justify-center mb-10">
+        <div class="rolex-card p-6 w-full flex flex-col items-center">
+            <div id="ring" class="progress-ring mb-4">
+                <span id="taskText" class="relative z-10 text-2xl font-black text-blue-600">0/3</span>
+            </div>
+            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-center">أكمل 3 مهام يومياً لتفعيل الربح التراكمي</p>
+        </div>
+    </div>
+
+    <div class="px-6 space-y-6">
+        <div class="text-center">
+            <h3 class="font-bold text-gray-700">تنشيط الكود الملكي</h3>
+            <p class="text-xs text-gray-400">تحقق من قناة التليجرام للحصول على الكود الجديد</p>
+        </div>
+
+        <input type="text" id="couponInput" placeholder="RX-XXXXXX" 
+               class="w-full p-5 rounded-3xl input-3d bg-gray-50 text-center text-xl tracking-widest text-blue-700 font-black uppercase">
+        
+        <button onclick="activateProcess()" id="mainBtn" class="btn-activate w-full p-5 text-white font-bold rounded-3xl text-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
+            <span>تفعيل الآن</span>
+            <span class="text-xl">⚡</span>
+        </button>
+    </div>
+
+    <div class="px-6 mt-12">
+        <h4 class="text-[10px] text-gray-400 font-bold uppercase mb-4 tracking-widest text-right">سجل التفعيل الأخير</h4>
+        <div id="history" class="space-y-3">
+            <p id="emptyMsg" class="text-xs text-gray-300 text-center">لا توجد عمليات نشطة حالياً</p>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md p-4 flex justify-around items-center border-t border-gray-100 rounded-t-[40px] shadow-2xl">
+        <a href="index.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">🏰</span>
+            <span class="text-[10px] font-bold text-right">الرئيسية</span>
+        </a>
+        <a href="code-hub.html" class="flex flex-col items-center text-blue-600 relative">
+            <span class="text-xl">🔑</span>
+            <span class="text-[10px] font-bold text-right">كود هاب</span>
+            <div class="absolute -bottom-2 w-1 h-1 bg-blue-600 rounded-full"></div>
+        </a>
+        <a href="team.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">📈</span>
+            <span class="text-[10px] font-bold text-right">الفريق</span>
+        </a>
+    </div>
+
+    <script>
+        // إعدادات Supabase (المفاتيح الخاصة بك)
+        const SUPABASE_URL = "https://rsmrgiyecaoicrqxgize.supabase.co";
+        const SUPABASE_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzbXJnaXllY2FvaWNycXhnaXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyNzU0MTQsImV4cCI6MjA1ODg1MTQxNH0.oW2u_3_jH3F8R8X8X8X8X8X8X8X8X8X8X8X8X8X8X8X8"; 
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let dailyCount = parseInt(localStorage.getItem('rolex_tasks')) || 0;
+        updateUI();
+
+        async function activateProcess() {
+            const userInput = document.getElementById('couponInput').value.trim();
+            const btn = document.getElementById('mainBtn');
+
+            if (!userInput) {
+                alert("يرجى إدخال الكود أولاً!");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "جاري التحقق من السيرفر...";
+
+            // 1. التحقق من الكود في قاعدة البيانات
+            const { data, error } = await _supabase
+                .from('active_codes')
+                .select('*')
+                .eq('code_value', userInput)
+                .eq('is_used', false);
+
+            if (data && data.length > 0) {
+                // 2. الكود صحيح! نقوم بتحديثه كـ "مستخدم"
+                const { error: updateError } = await _supabase
+                    .from('active_codes')
+                    .update({ is_used: true })
+                    .eq('code_value', userInput);
+
+                if (!updateError) {
+                    processSuccess(userInput);
+                } else {
+                    alert("حدث خطأ أثناء التحديث، حاول ثانية.");
+                }
+            } else {
+                alert("❌ كود غير صالح! تأكد من الكود المحدث في القناة.");
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<span>تفعيل الآن</span><span class="text-xl">⚡</span>';
+            document.getElementById('couponInput').value = "";
+        }
+
+        function processSuccess(code) {
+            // زيادة العداد اليومي
+            if (dailyCount < 3) dailyCount++;
+            localStorage.setItem('rolex_tasks', dailyCount);
+
+            // زيادة الرصيد (نضيف 3.33 USDT لكل كود ناجح)
+            let currentBalance = parseFloat(localStorage.getItem('rolex_balance')) || 0;
+            let newBalance = currentBalance + 3.33;
+            localStorage.setItem('rolex_balance', newBalance.toFixed(2));
+
+            // إضافة للسجل البصري
+            updateHistory(code);
+            updateUI();
+
+            alert("✅ تم التنشيط! تم إضافة 3.33 USDT لرصيدك.");
+        }
+
+        function updateUI() {
+            const percent = (dailyCount / 3) * 100;
+            document.getElementById('ring').style.background = `conic-gradient(#3b82f6 ${percent}%, #f3f4f6 ${percent}%)`;
+            document.getElementById('taskText').innerText = dailyCount + "/3";
+        }
+
+        function updateHistory(code) {
+            const history = document.getElementById('history');
+            const empty = document.getElementById('emptyMsg');
+            if (empty) empty.remove();
+
+            const div = document.createElement('div');
+            div.className = "rolex-card p-4 flex justify-between items-center animate-bounce";
+            div.innerHTML = `<span class="text-[10px] font-mono font-bold">${code}</span><span class="text-[10px] text-green-500 font-bold">+3.33 USDT</span>`;
+            history.prepend(div);
+        }
+    </script>
+</body>
+</html>
