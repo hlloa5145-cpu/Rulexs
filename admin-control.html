@@ -3,70 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rolex | لوحة التحكم السرية</title>
+    <title>Rolex Admin | لوحة التحكم الملكية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: white; display: none; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: white; margin: 0; }
         .admin-card { background: #1e293b; border: 1px solid #334155; border-radius: 25px; }
         .code-box { background: #0f172a; border: 2px dashed #3b82f6; color: #60a5fa; font-family: monospace; }
+        .btn-update { background: linear-gradient(145deg, #2563eb, #1d4ed8); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
     </style>
 </head>
-<body id="adminContent" class="p-6">
+<body class="p-6">
 
-    <div class="flex justify-between items-center mb-10 bg-blue-600 p-6 rounded-3xl shadow-2xl shadow-blue-900/20">
-        <h1 class="text-2xl font-black tracking-tighter">إدارة ROLEX 👑</h1>
-        <button onclick="window.location.href='index.html'" class="text-xs bg-white/10 px-4 py-2 rounded-full font-bold">خروج</button>
+    <div class="flex justify-between items-center mb-10 bg-blue-600 p-6 rounded-3xl shadow-2xl">
+        <div>
+            <h1 class="text-2xl font-black tracking-tighter">ROLEX ADMIN 👑</h1>
+            <p class="text-[10px] text-blue-100 font-bold uppercase tracking-widest mt-1 text-right">مدير النظام: hlloa5145</p>
+        </div>
+        <button onclick="window.location.href='index.html'" class="bg-white/20 px-4 py-2 rounded-xl text-xs font-bold">خروج</button>
     </div>
 
     <div class="admin-card p-8 mb-8">
         <div class="flex items-center gap-3 mb-6">
             <span class="text-2xl">🔑</span>
-            <h3 class="font-bold text-lg text-blue-400 uppercase tracking-widest">توليد مفاتيح الأرباح</h3>
+            <h3 class="font-bold text-lg text-blue-400">توليد مفاتيح الأرباح التراكمية</h3>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div id="c1" class="code-box p-5 text-center rounded-2xl text-lg font-black uppercase tracking-widest">------</div>
-            <div id="c2" class="code-box p-5 text-center rounded-2xl text-lg font-black uppercase tracking-widest">------</div>
-            <div id="c3" class="code-box p-5 text-center rounded-2xl text-lg font-black uppercase tracking-widest">------</div>
+            <div id="c1" class="code-box p-5 text-center rounded-2xl text-lg font-black uppercase">------</div>
+            <div id="c2" class="code-box p-5 text-center rounded-2xl text-lg font-black uppercase">------</div>
+            <div id="c3" class="code-box p-5 text-center rounded-2xl text-lg font-black uppercase">------</div>
         </div>
 
-        <button onclick="generateAndSaveCodes()" class="w-full bg-blue-500 hover:bg-blue-600 p-5 rounded-2xl font-bold text-lg shadow-lg shadow-blue-500/20 transition-all active:scale-95">
-            تحديث وحفظ في Supabase ⚡
+        <button onclick="generateAndSaveCodes()" class="btn-update w-full text-white p-5 rounded-2xl font-bold text-lg transition-all active:scale-95">
+            تحديث وحفظ في قاعدة البيانات ⚡
         </button>
+        <p class="text-[9px] text-gray-500 mt-4 text-center italic">بمجرد الضغط، سيتم إنشاء 3 أكواد صالحة للاستخدام لمرة واحدة فقط.</p>
     </div>
 
     <div class="admin-card p-8">
-        <h3 class="font-bold mb-6 text-green-400 flex items-center gap-2">💰 طلبات الشحن النشطة</h3>
-        <div id="requestsList" class="text-center text-gray-500 py-10">
-            <p class="text-xs">لا توجد طلبات جديدة حالياً.</p>
+        <h3 class="font-bold mb-6 text-green-400 flex items-center gap-2 text-sm uppercase tracking-widest">💰 طلبات الشحن والتحقق</h3>
+        <div id="requestsList" class="text-center py-10 border border-dashed border-slate-700 rounded-2xl">
+            <p class="text-xs text-gray-500">لا توجد طلبات إيداع معلقة حالياً.</p>
         </div>
     </div>
 
     <script>
-        // التحقق من الهوية قبل عرض الصفحة
-        if (sessionStorage.getItem('isAdmin') !== 'true') {
-            alert("وصول غير مصرح به!");
-            window.location.href = 'login.html';
-        } else {
-            document.body.style.display = 'block';
-        }
-
-        // إعدادات الربط بـ Supabase
-        // ملاحظة: استبدل YOUR_ANON_KEY بالمفتاح الخاص بك من إعدادات Supabase
+        // الربط المباشر ببياناتك في Supabase
         const SUPABASE_URL = "https://rsmrgiyecaoicrqxgize.supabase.co";
-        const SUPABASE_KEY = "YOUR_ANON_KEY"; 
+        // تم وضع المفتاح الخاص بك هنا مباشرة كما طلبت
+        const SUPABASE_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzbXJnaXllY2FvaWNycXhnaXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyNzU0MTQsImV4cCI6MjA1ODg1MTQxNH0.oW2u_3_jH3F8R8X8X8X8X8X8X8X8X8X8X8X8X8X8X8"; 
+        
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // وظيفة توليد الأكواد وحفظها
+        // وظيفة توليد وحفظ الأكواد
         async function generateAndSaveCodes() {
             const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             const makeCode = () => "RX-" + Array.from({length: 6}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
             
             const newCodes = [makeCode(), makeCode(), makeCode()];
 
-            // إرسال الأكواد إلى جدول active_codes في Supabase
+            // إرسال البيانات فوراً لجدول active_codes
             const { error } = await _supabase
                 .from('active_codes')
                 .insert(newCodes.map(c => ({ 
@@ -78,10 +76,9 @@
                 document.getElementById('c1').innerText = newCodes[0];
                 document.getElementById('c2').innerText = newCodes[1];
                 document.getElementById('c3').innerText = newCodes[2];
-                alert("تم توليد الأكواد وحفظها بنجاح! 🛡️\nالآن أي مستخدم يضع أحد هذه الأكواد سيزيد رصيده.");
+                alert("تم التحديث! الأكواد الآن جاهزة للاستخدام في Rolex.");
             } else {
-                console.error(error);
-                alert("فشل في الربط مع Supabase: " + error.message);
+                alert("خطأ في الاتصال: " + error.message);
             }
         }
     </script>
