@@ -1,0 +1,17 @@
+<script>
+    function handleAuth() {
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('pass').value;
+
+        // إيميل الإدارة الخاص بك
+        const adminEmail = "hlloa5145@gmail.com";
+        const adminPass = "ROLEX2026"; // يمكنك تغيير كلمة السر هنا
+
+        if (email === adminEmail && pass === adminPass) {
+            sessionStorage.setItem('isAdmin', 'true');
+            window.location.href = 'admin-control.html';
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+</script>
