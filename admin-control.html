@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolex | لوحة المدير</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; background-color: #f1f5f9; color: #1e293b; margin: 0; }
+        
+        .admin-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .btn-approve { background-color: #10b981; color: white; }
+        .btn-reject { background-color: #ef4444; color: white; }
+        .code-display {
+            background: #f8fafc;
+            border: 2px dashed #3b82f6;
+            color: #2563eb;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body class="p-4 pb-20">
+
+    <div class="mb-8 flex justify-between items-center bg-white p-5 rounded-2xl shadow-sm border-b-4 border-blue-600">
+        <h1 class="text-xl font-black">إدارة ROLEX 👑</h1>
+        <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">حالة النظام: متصل</span>
+    </div>
+
+    <div class="admin-card p-6 mb-6">
+        <h3 class="font-bold mb-4 flex items-center gap-2 text-blue-600">
+            <span>🔑</span> توليد الأكواد اليومية
+        </h3>
+        <p class="text-xs text-gray-400 mb-4 text-right">اضغط لتوليد 3 أكواد عشوائية لنشرها في قناتك.</p>
+        
+        <div class="grid grid-cols-3 gap-2 mb-4">
+            <div id="c1" class="code-display p-3 text-center rounded-xl text-sm font-bold">----</div>
+            <div id="c2" class="code-display p-3 text-center rounded-xl text-sm font-bold">----</div>
+            <div id="c3" class="code-display p-3 text-center rounded-xl text-sm font-bold">----</div>
+        </div>
+
+        <button onclick="generateCodes()" class="w-full bg-blue-600 text-white p-4 rounded-xl font-bold active:scale-95 transition-all">
+            تحديث أكواد اليوم ⚡
+        </button>
+    </div>
+
+    <div class="admin-card p-6">
+        <h3 class="font-bold mb-4 flex items-center gap-2 text-green-600">
+            <span>💰</span> طلبات الشحن الجديدة
+        </h3>
+        
+        <div id="depositRequests" class="space-y-4">
+            <div class="border border-gray-100 p-4 rounded-2xl bg-gray-50">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs font-bold text-gray-500">مستخدم: User_7721</span>
+                    <span class="text-blue-600 font-black">500 USDT</span>
+                </div>
+                <div class="bg-white p-2 rounded-lg mb-3 text-center border border-gray-100">
+                    <p class="text-[10px] text-gray-400 mb-1 italic">رابط صورة التحويل</p>
+                    <a href="#" class="text-blue-500 underline text-xs">مشاهدة Screenshot 📸</a>
+                </div>
+                <div class="flex gap-2">
+                    <button class="flex-1 p-3 btn-approve rounded-xl font-bold text-xs">قبول وتفعيل</button>
+                    <button class="flex-1 p-3 btn-reject rounded-xl font-bold text-xs">رفض الطلب</button>
+                </div>
+            </div>
+            
+            <p id="noRequests" class="text-center text-gray-300 py-10 text-sm hidden">لا توجد طلبات معلقة</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mt-6">
+        <div class="admin-card p-4 text-center">
+            <p class="text-[10px] text-gray-400 font-bold uppercase">إجمالي المستثمرين</p>
+            <p class="text-xl font-black text-gray-800">1,240</p>
+        </div>
+        <div class="admin-card p-4 text-center">
+            <p class="text-[10px] text-gray-400 font-bold uppercase">إجمالي المسحوبات</p>
+            <p class="text-xl font-black text-red-500">12,500$</p>
+        </div>
+    </div>
+
+    <script>
+        function generateCodes() {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const makeCode = () => Array.from({length: 6}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+            
+            document.getElementById('c1').innerText = "RX-" + makeCode();
+            document.getElementById('c2').innerText = "RX-" + makeCode();
+            document.getElementById('c3').innerText = "RX-" + makeCode();
+            
+            alert("تم توليد أكواد جديدة بنجاح! انسخها ووزعها على المستخدمين.");
+        }
+    </script>
+</body>
+</html>
