@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolex | الملف الشخصي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; background-color: #ffffff; color: #1f2937; margin: 0; }
+        
+        .rolex-card {
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 10px 10px 20px #e5e7eb, -10px -10px 20px #ffffff;
+            border-radius: 30px;
+        }
+
+        .profile-avatar {
+            width: 80px; height: 80px;
+            border-radius: 25px;
+            background: linear-gradient(145deg, #3b82f6, #1e40af);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+            font-size: 2rem; color: white;
+        }
+
+        .list-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 15px; border-bottom: 1px solid rgba(0,0,0,0.03);
+            transition: 0.3s;
+        }
+        .list-item:active { background: rgba(59, 130, 246, 0.05); }
+
+        .btn-logout {
+            background: rgba(239, 68, 68, 0.05);
+            color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.1);
+        }
+    </style>
+</head>
+<body class="pb-24">
+
+    <div class="p-8 flex flex-col items-center">
+        <div class="profile-avatar mb-4">👤</div>
+        <h2 class="text-xl font-black text-gray-800">User_7721</h2>
+        <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full mt-2">مستثمر بريميوم</p>
+    </div>
+
+    <div class="px-6 space-y-4">
+        <div class="rolex-card overflow-hidden">
+            <h3 class="p-5 text-[10px] text-gray-400 font-bold uppercase tracking-widest border-b border-gray-50">إعدادات الأمان</h3>
+            
+            <div class="list-item" onclick="alert('تغيير كلمة السر قيد التطوير')">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl text-blue-500">🔒</span>
+                    <span class="text-sm font-bold text-gray-600">تغيير كلمة المرور</span>
+                </div>
+                <span class="text-gray-300 text-lg">←</span>
+            </div>
+
+            <div class="list-item" onclick="alert('التوثيق متاح للمبالغ فوق 1000$')">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl text-blue-500">🛡️</span>
+                    <span class="text-sm font-bold text-gray-600">توثيق الحساب (KYC)</span>
+                </div>
+                <span class="text-gray-300 text-lg">←</span>
+            </div>
+        </div>
+
+        <div class="rolex-card overflow-hidden">
+            <h3 class="p-5 text-[10px] text-gray-400 font-bold uppercase tracking-widest border-b border-gray-50">الدعم والمساعدة</h3>
+            
+            <a href="https://t.me/your_channel" class="list-item">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl text-blue-500">📢</span>
+                    <span class="text-sm font-bold text-gray-600">القناة الرسمية</span>
+                </div>
+                <span class="text-gray-300 text-lg">←</span>
+            </a>
+
+            <div class="list-item" onclick="alert('خدمة العملاء متوفرة 24/7')">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl text-blue-500">💬</span>
+                    <span class="text-sm font-bold text-gray-600">تحدث مع الدعم</span>
+                </div>
+                <span class="text-gray-300 text-lg">←</span>
+            </div>
+        </div>
+
+        <button onclick="window.location.href='login.html'" class="w-full p-5 rounded-3xl btn-logout font-bold text-sm mt-4 active:scale-95 transition-all">
+            تسجيل الخروج من Rolex
+        </button>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md p-4 flex justify-around items-center border-t border-gray-100 rounded-t-[40px] shadow-2xl">
+        <a href="index.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">🏰</span>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </a>
+        <a href="code-hub.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">🔑</span>
+            <span class="text-[10px] font-bold">كود هاب</span>
+        </a>
+        <a href="team.html" class="flex flex-col items-center text-gray-300">
+            <span class="text-xl">📈</span>
+            <span class="text-[10px] font-bold">الفريق</span>
+        </a>
+        <a href="profile.html" class="flex flex-col items-center text-blue-600 relative">
+            <span class="text-xl">⚙️</span>
+            <span class="text-[10px] font-bold">إعدادات</span>
+            <div class="absolute -bottom-2 w-1 h-1 bg-blue-600 rounded-full"></div>
+        </a>
+    </div>
+
+</body>
+</html>
