@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolex | إنشاء حساب جديد</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Montserrat:wght@900&display=swap');
+        body { font-family: 'Tajawal', sans-serif; background: #ffffff; margin: 0; }
+        
+        .rolex-card {
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 20px 20px 60px #d1d1d1, -20px -20px 60px #ffffff;
+            border-radius: 40px;
+        }
+
+        .input-3d {
+            box-shadow: inset 6px 6px 12px #dbdbdb, inset -6px -6px 12px #ffffff;
+            border: none; outline: none;
+            transition: 0.3s;
+        }
+
+        .btn-reg {
+            background: linear-gradient(145deg, #10b981, #059669);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+    </style>
+</head>
+<body class="p-6 flex items-center justify-center min-h-screen bg-gray-50">
+
+    <div class="w-full max-w-sm">
+        <div class="text-center mb-8">
+            <h1 style="font-family: 'Montserrat', sans-serif;" class="text-4xl font-black text-blue-600 tracking-tighter italic">ROLEX</h1>
+            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-2">انضم لنخبة المستثمرين</p>
+        </div>
+
+        <div class="rolex-card p-8 space-y-5">
+            <h2 class="text-lg font-bold text-gray-800 text-center">فتح حساب جديد</h2>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="text-[9px] text-gray-400 font-bold uppercase mr-4 mb-1 block">اسم المستخدم</label>
+                    <input type="text" id="regUser" placeholder="User123" 
+                           class="w-full p-4 rounded-2xl input-3d bg-gray-50 text-sm font-bold text-blue-900">
+                </div>
+
+                <div>
+                    <label class="text-[9px] text-gray-400 font-bold uppercase mr-4 mb-1 block">البريد الإلكتروني</label>
+                    <input type="email" id="regEmail" placeholder="email@example.com" 
+                           class="w-full p-4 rounded-2xl input-3d bg-gray-50 text-sm font-bold text-blue-900">
+                </div>
+
+                <div>
+                    <label class="text-[9px] text-gray-400 font-bold uppercase mr-4 mb-1 block">كلمة المرور</label>
+                    <input type="password" id="regPass" placeholder="••••••••" 
+                           class="w-full p-4 rounded-2xl input-3d bg-gray-50 text-sm font-bold text-blue-900">
+                </div>
+
+                <div>
+                    <label class="text-[9px] text-blue-400 font-bold uppercase mr-4 mb-1 block italic">كود الدعوة (إن وجد)</label>
+                    <input type="text" id="inviteCode" placeholder="OPTIONAL" 
+                           class="w-full p-4 rounded-2xl input-3d bg-gray-50 text-center text-xs font-black text-blue-600">
+                </div>
+            </div>
+
+            <button onclick="handleRegister()" class="btn-reg w-full p-4 text-white font-bold rounded-2xl text-lg shadow-xl active:scale-95 transition-all mt-4">
+                تأكيد التسجيل ✅
+            </button>
+
+            <div class="text-center pt-2">
+                <p class="text-[10px] text-gray-400 font-bold uppercase">
+                    لديك حساب بالفعل؟ <a href="login.html" class="text-blue-600 underline">تسجيل الدخول</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleRegister() {
+            const user = document.getElementById('regUser').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const pass = document.getElementById('regPass').value.trim();
+
+            if (!user || !email || !pass) {
+                alert("يرجى إكمال كافة البيانات المطلوبة!");
+                return;
+            }
+
+            // محاكاة حفظ البيانات (سيتم ربطها بـ Supabase لاحقاً)
+            localStorage.setItem('rolex_username', user);
+            localStorage.setItem('rolex_user_email', email);
+            
+            // تهيئة رصيد ترحيبي (مثلاً 1 USDT كهدية تسجيل)
+            localStorage.setItem('rolex_balance', '1.00');
+
+            alert(`مرحباً بك يا ${user} في عائلة Rolex!\nتم إنشاء حسابك بنجاح.`);
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
