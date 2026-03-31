@@ -13,105 +13,47 @@
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
-
-    <div class="w-full max-w-md glass p-10 rounded-[2.5rem] shadow-2xl">
-        <div class="text-center mb-10">
-            <h1 class="text-5xl font-black text-blue-500 italic tracking-tighter">ROLEX</h1>
-            <p id="formTitle" class="text-gray-400 font-bold mt-2 text-xs uppercase tracking-[0.2em]">تسجيل الدخول</p>
+    <div id="app" class="w-full max-w-md glass p-10 rounded-[2.5rem] shadow-2xl">
         </div>
-
-        <div class="space-y-4">
-            <div id="userField" class="hidden transition-all">
-                <input type="text" id="username" placeholder="اسم المستخدم" 
-                       class="w-full p-4 rounded-2xl bg-slate-800 border border-transparent focus:bg-slate-700 focus:border-blue-500 outline-none transition-all font-bold">
-            </div>
-            <input type="email" id="email" placeholder="البريد الإلكتروني" 
-                   class="w-full p-4 rounded-2xl bg-slate-800 border border-transparent focus:bg-slate-700 focus:border-blue-500 outline-none transition-all font-bold">
-            <input type="password" id="password" placeholder="كلمة المرور" 
-                   class="w-full p-4 rounded-2xl bg-slate-800 border border-transparent focus:bg-slate-700 focus:border-blue-500 outline-none transition-all font-bold">
-            
-            <button onclick="handleSubmit()" id="mainBtn" 
-                    class="w-full bg-blue-600 text-white p-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-900/20 hover:bg-blue-500 active:scale-95 transition-all">
-                دخول 🚀
-            </button>
-        </div>
-
-        <div class="text-center mt-8">
-            <button onclick="toggleMode()" id="toggleBtn" class="text-sm text-gray-500 font-bold hover:text-blue-400 transition-colors underline">
-                ليس لديك حساب؟ إنشاء حساب جديد
-            </button>
-        </div>
-    </div>
 
     <script>
-        // الربط المباشر والنهائي (تم تعديله لك)
         const SUPABASE_URL = "https://rsmrgiyecaoicrqxgize.supabase.co";
         const SUPABASE_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzbXJnaXllY2FvaWNycXhnaXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4OTEzODgsImV4cCI6MjA5MDQ2NzM4OH0.9YafUeTgpnqWNsjokIwzHmM-nEkDH81271t2rdk_2UQ";
-        
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        let isLoginMode = true;
+        const app = document.getElementById('app');
 
-        function toggleMode() {
-            isLoginMode = !isLoginMode;
-            document.getElementById('userField').classList.toggle('hidden');
-            document.getElementById('formTitle').innerText = isLoginMode ? "تسجيل الدخول" : "إنشاء حساب جديد";
-            document.getElementById('mainBtn').innerText = isLoginMode ? "دخول 🚀" : "بدء الرحلة ✨";
-            document.getElementById('toggleBtn').innerText = isLoginMode ? "ليس لديك حساب؟ إنشاء حساب جديد" : "لديك حساب بالفعل؟ تسجيل الدخول";
+        // دالة عرض صفحة الدخول
+        function showLogin() {
+            app.innerHTML = `
+                <div class="text-center mb-10">
+                    <h1 class="text-5xl font-black text-blue-500 italic uppercase">Rolex</h1>
+                    <p class="text-gray-400 mt-2 font-bold">تسجيل الدخول</p>
+                </div>
+                <div class="space-y-4">
+                    <input type="email" id="email" placeholder="البريد الإلكتروني" class="w-full p-4 rounded-2xl bg-slate-800 outline-none focus:border-blue-500 border border-transparent transition-all">
+                    <input type="password" id="pass" placeholder="كلمة المرور" class="w-full p-4 rounded-2xl bg-slate-800 outline-none focus:border-blue-500 border border-transparent transition-all">
+                    <button onclick="login()" id="btn" class="w-full bg-blue-600 p-4 rounded-2xl font-black text-lg">دخول 🚀</button>
+                    <button onclick="showRegister()" class="w-full text-sm text-gray-500 underline mt-4">إنشاء حساب جديد</button>
+                </div>
+            `;
         }
 
-        async function handleSubmit() {
-            const email = document.getElementById('email').value.trim();
-            const pass = document.getElementById('password').value.trim();
-            const user = document.getElementById('username').value.trim();
-            const btn = document.getElementById('mainBtn');
-
-            if (!email || !pass || (!isLoginMode && !user)) {
-                alert("يرجى إكمال كافة البيانات!");
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerText = "جاري الاتصال...";
-
-            try {
-                if (isLoginMode) {
-                    const { data, error } = await _supabase
-                        .from('user_profiles')
-                        .select('*')
-                        .eq('email', email)
-                        .eq('password', pass)
-                        .single();
-
-                    if (data) {
-                        localStorage.setItem('user_session', JSON.stringify(data));
-                        window.location.href = 'home-wallet.html';
-                    } else {
-                        alert("الإيميل أو الباسورد خطأ، تأكد منهم!");
-                        resetBtn();
-                    }
-                } else {
-                    const { error } = await _supabase
-                        .from('user_profiles')
-                        .insert([{ email, password: pass, username: user, balance: 0 }]);
-
-                    if (error) throw error;
-                    alert("مبروك! تم إنشاء حسابك بنجاح، سجل دخولك الآن.");
-                    toggleMode();
-                    resetBtn();
-                }
-            } catch (err) {
-                console.error(err);
-                alert("حدث خطأ في الاتصال، تأكد من تحديث الصفحة.");
-                resetBtn();
+        // دالة الدخول
+        async function login() {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            const { data, error } = await _supabase.from('user_profiles').select('*').eq('email', email).eq('password', pass).single();
+            if (data) {
+                alert('أهلاً بك: ' + data.username);
+                // هنا نفتح صفحة المحفظة
+            } else {
+                alert('خطأ في البيانات!');
             }
         }
 
-        function resetBtn() {
-            const btn = document.getElementById('mainBtn');
-            btn.disabled = false;
-            btn.innerText = isLoginMode ? "دخول 🚀" : "بدء الرحلة ✨";
-        }
+        // ابدأ بصفحة الدخول
+        showLogin();
     </script>
 </body>
 </html>
