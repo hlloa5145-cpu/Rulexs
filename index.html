@@ -3,113 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rolex | بوابة الدخول الذكية</title>
+    <title>Rolex | المنصة الذكية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-        body { font-family: 'Tajawal', sans-serif; background: #ffffff; margin: 0; }
-        
-        .rolex-card {
-            background: linear-gradient(145deg, #f9fafb, #ffffff);
-            border: 1px solid rgba(59, 130, 246, 0.1);
-            box-shadow: 20px 20px 60px #d1d1d1, -20px -20px 60px #ffffff;
-            border-radius: 40px;
-        }
-
-        .input-3d {
-            box-shadow: inset 6px 6px 12px #dbdbdb, inset -6px -6px 12px #ffffff;
-            border: none; outline: none; transition: 0.3s;
-        }
-
-        .btn-login {
-            background: linear-gradient(145deg, #1e40af, #3b82f6);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
-        }
+        body { font-family: 'Tajawal', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); }
     </style>
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen p-6">
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-sm">
-        <div class="text-center mb-10">
-            <h1 class="text-5xl font-black text-blue-600 tracking-tighter italic">ROLEX</h1>
-            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-2 text-center">Digital Investment System</p>
+    <div class="w-full max-w-md glass p-8 rounded-[2rem] shadow-2xl">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-black text-blue-600 italic tracking-tighter">ROLEX</h1>
+            <div id="formTitle" class="text-gray-500 font-bold mt-2 text-sm uppercase tracking-widest">تسجيل الدخول</div>
         </div>
 
-        <div class="rolex-card p-10 space-y-6">
-            <div class="text-center">
-                <h2 class="text-xl font-bold text-gray-800">تسجيل الدخول</h2>
-                <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold">يرجى إدخال بياناتك للوصول للمحفظة</p>
+        <div class="space-y-4">
+            <div id="userField" class="hidden">
+                <input type="text" id="username" placeholder="اسم المستخدم" class="w-full p-4 rounded-2xl bg-gray-50 border border-gray-100 outline-none focus:border-blue-500 transition-all font-bold">
             </div>
-
-            <div class="space-y-4">
-                <input type="email" id="email" placeholder="البريد الإلكتروني" 
-                       class="w-full p-5 rounded-3xl input-3d bg-gray-50 text-sm font-bold text-blue-900 outline-none">
-                
-                <input type="password" id="password" placeholder="كلمة المرور" 
-                       class="w-full p-5 rounded-3xl input-3d bg-gray-50 text-sm font-bold text-blue-900 outline-none">
-            </div>
-
-            <button onclick="handleLogin()" id="loginBtn" class="btn-login w-full p-5 text-white font-bold rounded-3xl text-lg active:scale-95 transition-all">
-                دخول المنصة 🚀
+            <input type="email" id="email" placeholder="البريد الإلكتروني" class="w-full p-4 rounded-2xl bg-gray-50 border border-gray-100 outline-none focus:border-blue-500 transition-all font-bold">
+            <input type="password" id="password" placeholder="كلمة المرور" class="w-full p-4 rounded-2xl bg-gray-50 border border-gray-100 outline-none focus:border-blue-500 transition-all font-bold">
+            
+            <button onclick="handleSubmit()" id="mainBtn" class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold text-lg shadow-lg hover:bg-blue-700 active:scale-95 transition-all">
+                دخول 🚀
             </button>
+        </div>
 
-            <div class="text-center pt-2">
-                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                    ليس لديك حساب؟ <a href="register.html" class="text-blue-600 underline">إنشاء حساب جديد</a>
-                </p>
-            </div>
+        <div class="text-center mt-6">
+            <button onclick="toggleMode()" id="toggleBtn" class="text-sm text-gray-500 font-bold hover:text-blue-600 transition-colors">
+                ليس لديك حساب؟ <span class="text-blue-600 underline">إنشاء حساب جديد</span>
+            </button>
         </div>
     </div>
 
     <script>
-        // إعدادات الربط بقاعدة البيانات (المفاتيح الخاصة بك)
+        // إعدادات Supabase الخاصة بك
         const SUPABASE_URL = "https://rsmrgiyecaoicrqxgize.supabase.co";
-        const SUPABASE_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzbXJnaXllY2FvaWNycXhnaXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyNzU0MTQsImV4cCI6MjA1ODg1MTQxNH0.oW2u_3_jH3F8R8X8X8X8X8X8X8X8X8X8X8X8X8X8X8X8X8"; 
+        const SUPABASE_KEY = "EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzbXJnaXllY2FvaWNycXhnaXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyNzU0MTQsImV4cCI6MjA1ODg1MTQxNH0.oW2u_3_jH3F8R8X8X8X8X8X8X8X8X8X8X8X8X8X8X8X8X8X"; // تأكد من المفتاح الكامل
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        async function handleLogin() {
-            const emailInput = document.getElementById('email').value.trim();
-            const passwordInput = document.getElementById('password').value.trim();
-            const btn = document.getElementById('loginBtn');
+        let isLoginMode = true;
 
-            if (!emailInput || !passwordInput) {
-                alert("يرجى ملء جميع الحقول!");
+        function toggleMode() {
+            isLoginMode = !isLoginMode;
+            document.getElementById('userField').classList.toggle('hidden');
+            document.getElementById('formTitle').innerText = isLoginMode ? "تسجيل الدخول" : "إنشاء حساب جديد";
+            document.getElementById('mainBtn').innerText = isLoginMode ? "دخول 🚀" : "تسجيل جديد ✨";
+            document.getElementById('toggleBtn').innerHTML = isLoginMode ? 
+                'ليس لديك حساب؟ <span class="text-blue-600 underline">إنشاء حساب جديد</span>' : 
+                'لديك حساب بالفعل؟ <span class="text-blue-600 underline">تسجيل الدخول</span>';
+        }
+
+        async function handleSubmit() {
+            const email = document.getElementById('email').value.trim();
+            const pass = document.getElementById('password').value.trim();
+            const user = document.getElementById('username').value.trim();
+            const btn = document.getElementById('mainBtn');
+
+            if (!email || !pass || (!isLoginMode && !user)) {
+                alert("يرجى إكمال البيانات!");
                 return;
             }
 
             btn.disabled = true;
-            btn.innerText = "جاري التحقق...";
+            btn.innerText = "جاري المعالجة...";
 
-            // 1. التحقق إذا كان الشخص هو أنت (المدير)
-            const ADMIN_EMAIL = "hlloa5145@gmail.com";
-            if (emailInput.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
-                sessionStorage.setItem('isAdmin', 'true');
-                alert("مرحباً بك أيها المدير.. جاري الانتقال للوحة التحكم.");
-                window.location.href = 'admin-control.html';
-                return;
-            }
+            if (isLoginMode) {
+                // عملية تسجيل الدخول
+                if (email === "hlloa5145@gmail.com") {
+                    window.location.href = 'admin-control.html';
+                    return;
+                }
 
-            // 2. التحقق من المستخدم في جدول user_profiles في قاعدة البيانات
-            const { data, error } = await _supabase
-                .from('user_profiles')
-                .select('*')
-                .eq('email', emailInput)
-                .eq('password', passwordInput)
-                .single();
+                const { data, error } = await _supabase
+                    .from('user_profiles')
+                    .select('*')
+                    .eq('email', email)
+                    .eq('password', pass);
 
-            if (data) {
-                // حفظ بيانات الجلسة للمستخدم
-                sessionStorage.setItem('user_email', data.email);
-                sessionStorage.setItem('user_name', data.username);
-                localStorage.setItem('rolex_balance', data.balance || "0.00");
-
-                alert(`أهلاً بك يا ${data.username} في Rolex`);
-                window.location.href = 'home-wallet.html'; // الانتقال للمحفظة
+                if (data && data.length > 0) {
+                    sessionStorage.setItem('user_email', data[0].email);
+                    window.location.href = 'home-wallet.html';
+                } else {
+                    alert("بيانات خاطئة أو الحساب غير موجود!");
+                    btn.disabled = false;
+                    btn.innerText = "دخول 🚀";
+                }
             } else {
-                alert("خطأ: البريد الإلكتروني أو كلمة المرور غير صحيحة، أو الحساب غير موجود.");
-                btn.disabled = false;
-                btn.innerText = "دخول المنصة 🚀";
+                // عملية إنشاء حساب جديد
+                const { error } = await _supabase
+                    .from('user_profiles')
+                    .insert([{ email: email, password: pass, username: user, balance: 0 }]);
+
+                if (error) {
+                    alert("خطأ في التسجيل: " + error.message);
+                    btn.disabled = false;
+                    btn.innerText = "تسجيل جديد ✨";
+                } else {
+                    alert("تم التسجيل بنجاح! يمكنك الدخول الآن.");
+                    toggleMode();
+                }
             }
         }
     </script>
